@@ -1,0 +1,26 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:12
+variables:
+  PROJECT_NAME: node-gitlab-ci-cd
+  # SERVICE_NAME: calculator
+  # SERVICE_VERSION: 3.0.0
+  ECR_URI: 457557654038.dkr.ecr.ap-southeast-1.amazonaws.com
+  ECR_ACC: 457557654038
+
+# docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+
+# docker build -t registry.gitlab.com/siwakorn_s/node-gitlab-ci-cd .
+# docker push registry.gitlab.com/siwakorn_s/node-gitlab-ci-cd
+
+before_script:
+  - npm install
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+services:
+  - docker:dind
